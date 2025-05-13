@@ -6,6 +6,25 @@ const routes: Routes = [
   {
     path: '',
     component: HomePage,
+    children: [
+      /*{VER COMO ESTA EL MAPA
+        path: '', //Este es el path va en la pantalla de inicio
+        redirectTo: 'menu',
+        pathMatch: 'full'
+      },
+      {    
+        path: 'menu',
+        loadChildren: () => import(aca va entre '' la direccione del componente.module).then(c => c.SU COMPONENTE)
+      },*/
+      {
+        path: 'mapa',
+        loadChildren: () => import('../menu-mapa/menu-mapa.module').then(m => m.MenuMapaPageModule)
+      },/*
+      {
+        path: 'mis-salidas',
+        loadChildren: () => import(aca va entre '' la direccione del componente.module).then(m =>  c.SU COMPONENTE)
+      },*/
+    ]
   }
 ];
 
@@ -13,4 +32,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class HomePageRoutingModule {}
+export class HomePageRoutingModule { }

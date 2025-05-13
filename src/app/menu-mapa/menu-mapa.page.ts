@@ -20,15 +20,15 @@ export class MenuMapaPage implements OnInit {
     this.loadMap();
   }
 
-  private lat = -34.61; // Latitud de Buenos Aires
-  private lng = -58.38; // Longitud de Buenos Aires
+  private lat = -34.61; // Latitud de BsAs
+  private lng = -58.38; // Longitud de BsAs
   private primeraEntrada: boolean = true;
   private marcador: L.CircleMarker | undefined;
 
 
   async loadMap() {
 
-    this.map = L.map('map').setView([this.lat, this.lng], 13); //Ubicar en Buenos Aires por defecto
+    this.map = L.map('map').setView([this.lat, this.lng], 13); //Ubicar en Bs As por defecto
 
     // Cargar el mapa
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -40,7 +40,7 @@ export class MenuMapaPage implements OnInit {
       this.map?.invalidateSize();
     }, 0);
 
-    // Obtener la ubicación del usuario
+    // Obtener la ubicación del usuario cada 5 segundos
     setInterval(() => {
       this.getUserLocation();
     }, 5000);
@@ -75,7 +75,7 @@ export class MenuMapaPage implements OnInit {
           this.primeraEntrada = false;
         }
 
-        // Si ya hay un marcador, lo movemos
+        // Si ya hay un marcador lo movemos
         if (this.marcador) {
           this.marcador.setLatLng([latitude, longitude]);
         }
