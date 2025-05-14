@@ -18,7 +18,7 @@ const routes: Routes = [
       },*/
       {
         path: 'mapa',
-        loadChildren: () => import('../menu-mapa/menu-mapa.module').then(m => m.MenuMapaPageModule)
+        loadChildren: () => import('../../pages/menu-mapa/menu-mapa.module').then(m => m.MenuMapaPageModule)
       },/*
       {
         path: 'mis-salidas',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RegisterService } from '../service/register.service';
+import { RegisterService } from '../../../services/location/register.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 

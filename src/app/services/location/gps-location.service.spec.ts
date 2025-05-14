@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GpsLocationService } from '../service/gps-location.service';
+import { GpsLocationService } from '../../services/location/gps-location.service';
 
 describe('GpsLocationService', () => {
   let service: GpsLocationService;
