@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
-import { GpsLocationService } from '../service/gps-location.service';
+import { GpsLocationService } from '../../services/location/gps-location.service';
 
 @Component({
   selector: 'app-menu-mapa',
