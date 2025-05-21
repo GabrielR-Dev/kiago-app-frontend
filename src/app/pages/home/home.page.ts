@@ -10,4 +10,9 @@ export class HomePage {
 
   constructor() {}
 
+  cerrarSesion() {
+    localStorage.clear();
+    window.location.href = '/';
+  }
+
 }

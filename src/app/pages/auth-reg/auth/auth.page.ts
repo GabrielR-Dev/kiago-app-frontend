@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonHeader, IonContent, IonToolbar } from '@ionic/angular/standalone';
 import { FirebaseService } from 'src/app/services/firebase/firebase.service';
 import { inject } from '@angular/core';
-import { User } from 'src/app/models/user.module';
+import { User } from 'src/app/models/user.model';
 import { UtilsService } from 'src/app/services/firebase/utils.service';
 import { Router } from '@angular/router';
 
@@ -36,6 +36,11 @@ export class AuthPage implements OnInit {
         console.log(res);
         const token = await res.user.getIdToken();
         console.log(token);
+
+        // Guardar datos mínimos en localStorage
+        localStorage.setItem('userToken', token);
+        localStorage.setItem('userEmail', res.user.email || '');
+        localStorage.setItem('userUid', res.user.uid || '');
 
         // Redirigir al mapa después de iniciar sesión correctamente
         this.router.navigate(['/home']);
