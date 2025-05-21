@@ -99,6 +99,7 @@ export class MenuMapaPage implements OnInit {
         // Si ya hay un marcador lo movemos
         if (this.marcador) {
           this.marcador.setLatLng([latitude, longitude]);
+          console.log(this.marcador.setLatLng([latitude, longitude]));
         }
       }
     } catch (error) {
