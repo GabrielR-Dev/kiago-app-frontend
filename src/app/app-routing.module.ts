@@ -23,6 +23,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/view-lugar/view-lugar.module').then(m => m.ViewLugarPageModule),
     canActivate: [AuthGuard]
   },
+    path: 'menu-mapa',      
+    loadChildren: () => import('./menu-mapa/menu-mapa.module').then( m => m.MenuMapaPageModule)
+  }
+  
+
 ];
 
 @NgModule({
