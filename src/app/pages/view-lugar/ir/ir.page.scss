@@ -1,0 +1,23 @@
+ion-content {
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.ion-header {
+    display: flex;
+}
+
+
+
+.map {
+    height: 93%;
+    width: 97%;
+    margin: 50px auto 0;
+    border: 1px solid #000;
+}
+

@@ -1,0 +1,60 @@
+<ion-content>
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/home/mapa"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Detalles del Lugar</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content *ngIf="lugar">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ lugar.name }}</ion-card-title>
+        <ion-card-subtitle>{{ lugar.category }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        
+        <p><strong>Dirección:</strong> {{ lugar.address }}</p>
+        <p><strong>Descripción:</strong> {{ lugar.description }}</p>
+        <p><strong>Creado por:</strong> {{ lugar.createdBy }}</p>
+        <p><strong>Latitud:</strong> {{ lugar.latitude }}</p>
+        <p><strong>Longitud:</strong> {{ lugar.longitude }}</p>
+        <ion-button color="primary" [routerLink]="['ir',lugar.latitude, lugar.longitude]">Ir</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="fotos.length">
+      <ion-card-header>
+        <ion-card-title>Fotos</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <img *ngFor="let foto of fotos" [src]="foto.url" alt="Foto del lugar" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;" />
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="comentarios.length">
+      <ion-card-header>
+        <ion-card-title>Comentarios</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let comentario of comentarios">
+            <ion-label>
+              <h3>{{ comentario.autor || comentario.user || 'Anónimo' }}</h3>
+              <p>{{ comentario.texto || comentario.comentario || comentario.text || comentario.content }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+  <ion-content *ngIf="!lugar">
+    <ion-text color="danger">
+      <h2 class="ion-text-center">No se encontró el lugar.</h2>
+    </ion-text>
+  </ion-content>
+</ion-content>

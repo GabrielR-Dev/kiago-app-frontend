@@ -4,18 +4,20 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MenuMapaPageRoutingModule } from './menu-mapa-routing.module';
+import { IrPageRoutingModule } from './ir-routing.module';
 
-import { MenuMapaPage } from './menu-mapa.page';
+import { IrPage } from './ir.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MenuMapaPageRoutingModule,
-    
+    IrPageRoutingModule,
+    CommonModule,
+    FormsModule,
+    IonicModule,
   ],
-  declarations: [MenuMapaPage]
+  declarations: [IrPage]
 })
-export class MenuMapaPageModule {}
+export class IrPageModule { }
