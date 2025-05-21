@@ -12,6 +12,15 @@ const routes: Routes = [
         path: 'mapa',
         loadChildren: () => import('../../pages/menu-mapa/menu-mapa.module').then(m => m.MenuMapaPageModule)
       },
+      {
+        path: 'menu',
+        loadChildren: () => import('../../pages/menumenu/menumenu.module').then(m => m.MenumenuPageModule)
+      },
+      {
+        path: 'mis-salidas',
+        loadChildren: () => import('../../pages/tab3/tab3.module').then(m => m.Tab3PageModule)
+      },
+      { path: '', redirectTo: 'menu', pathMatch: 'full' }
     ]
   }
 ];

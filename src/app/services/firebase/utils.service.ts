@@ -9,6 +9,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
+// La clase UtilsService se encarga de crear y mostrar un loading y un toast
 export class UtilsService {
   loadingCtrl = inject(LoadingController);
   toastCtrl = inject(ToastController);

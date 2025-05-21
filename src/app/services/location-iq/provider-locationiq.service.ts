@@ -22,4 +22,9 @@ export class ProviderLocationiqService {
     return this.http.get(url);
   }
 
+  public obtenerDistancia(latI: number, lngI: number, latF: number, lngF: number) {
+    const url = `https://us1.locationiq.com/v1/directions/driving/${lngI},${latI};${lngF},${latF}?key=${this.apiKey}&overview=false`;
+    return this.http.get(url);
+  }
+
 }

@@ -10,6 +10,13 @@
 </ion-header>
 
 <ion-content fullscreen>
+  <div *ngIf="mostrarInfo" class="info-modal">
+    <div class="info-content">
+      <strong>Destino:</strong> {{ direccionDestino }}<br>
+      <strong>Distancia:</strong> {{ distanciaKm | number:'1.1-2' }} km<br>
+      <strong>Duración estimada:</strong> {{ duracionTexto }}
+    </div>
+  </div>
   <div id="map" class="map"></div>
 </ion-content>
 
