@@ -18,6 +18,11 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./pages/auth-reg/register/register.module').then(m => m.RegisterPageModule)
   },
+  {
+    path: 'menu-mapa',      
+    loadChildren: () => import('./menu-mapa/menu-mapa.module').then( m => m.MenuMapaPageModule)
+  }
+  
 
 ];
 
