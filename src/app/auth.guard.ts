@@ -13,9 +13,11 @@ export class AuthGuard implements CanActivate {
   canActivate(): Observable<boolean | UrlTree> {
     return this.afAuth.authState.pipe(
       map(user => {
-        if (user) {
+        const token = localStorage.getItem('userToken');
+        if (user && token) {
           return true;
         } else {
+          // Redirige al login si no hay usuario o token
           return this.router.createUrlTree(['/']);
         }
       })

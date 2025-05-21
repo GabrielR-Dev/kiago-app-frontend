@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   standalone: false,
 })
 export class MenuMapaPage implements OnInit {
+  // Definición de variables
   private map: L.Map | undefined;
 
   constructor(
@@ -21,7 +22,9 @@ export class MenuMapaPage implements OnInit {
     private ngZone: NgZone
   ) { }
 
+  
   ngOnInit() {
+    // Obtener la ubicación del usuario al iniciar
     // Escuchar el evento personalizado para navegación desde el popup
     window.addEventListener('verLugar', (event: any) => {
       this.ngZone.run(() => {
@@ -29,6 +32,7 @@ export class MenuMapaPage implements OnInit {
         this.router.navigate(['/view-lugar', id]);
       });
     });
+    // Obtener la ubicación de los lugares desde la API
     this.providerLugares.verLuagares().subscribe((lugares: Lugar[]) => {
       console.log('Lugares desde la API:', lugares);
       this.lugares(lugares);
@@ -37,6 +41,7 @@ export class MenuMapaPage implements OnInit {
 
   }
 
+  // Renderizar el mapa una vez que se haya cargado el HTML
   ngAfterViewInit() {
     this.loadMap();
   }
@@ -94,6 +99,7 @@ export class MenuMapaPage implements OnInit {
         // Si ya hay un marcador lo movemos
         if (this.marcador) {
           this.marcador.setLatLng([latitude, longitude]);
+          console.log(this.marcador.setLatLng([latitude, longitude]));
         }
       }
     } catch (error) {
@@ -103,15 +109,17 @@ export class MenuMapaPage implements OnInit {
 
   // Marca en el mapa los puntos del array de lugares de la API
   lugares(lugaresArray: Lugar[]) {
+    //
     if (!this.map) return;
 
     lugaresArray.forEach(lugar => {
+
       const marker = L.marker([lugar.latitude, lugar.longitude], {
         icon: L.icon({
-          iconUrl: 'assets/icon/favicon.png',
-          iconSize: [25, 25],
-          iconAnchor: [12, 25],
-          popupAnchor: [0, -25],
+          iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', // Icono rojo de marcador
+          iconSize: [32, 32],
+          iconAnchor: [16, 32],
+          popupAnchor: [0, -32],
         })
       }).addTo(this.map!);
 
@@ -122,6 +130,7 @@ export class MenuMapaPage implements OnInit {
           <a style="color:blue;text-decoration:underline;margin-top:5px;display:inline-block;cursor:pointer;" onclick="window.dispatchEvent(new CustomEvent('verLugar', { detail: ${lugar.id} }))">Ver</a>
         </div>
       `;
+      // Agregar el contenido del popup al marcador
       marker.bindPopup(popupContent);
     });
   }

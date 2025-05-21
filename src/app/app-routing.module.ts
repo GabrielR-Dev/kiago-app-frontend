@@ -23,8 +23,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/view-lugar/view-lugar.module').then(m => m.ViewLugarPageModule),
     canActivate: [AuthGuard]
   },
-    path: 'menu-mapa',      
-    loadChildren: () => import('./menu-mapa/menu-mapa.module').then( m => m.MenuMapaPageModule)
+  {
+    path: 'menu-mapa',
+    loadChildren: () => import('./pages/menu-mapa/menu-mapa.module').then(m => m.MenuMapaPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'menu',
+    loadChildren: () => import('./pages/menumenu/menumenu.module').then(m => m.MenumenuPageModule),
+    canActivate: [AuthGuard]
   }
   
 

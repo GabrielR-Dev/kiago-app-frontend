@@ -21,8 +21,11 @@ export class ViewLugarPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    // Obtener el ID del lugar desde la URL
     const id = this.route.snapshot.paramMap.get('id');
     console.log('ID recibido:', id);
+
+    // Verificar si el ID es válido y cargar los datos del lugar
     if (id) {
       this.providerLugares.verLugar(+id).subscribe((lugar: Lugar) => {
         this.lugar = lugar;
@@ -36,6 +39,8 @@ export class ViewLugarPage implements OnInit {
     }
   }
 
+  // Método para abrir el mapa en la ubicación del lugar
+  // y mostrar la ruta desde la ubicación actual
   abrirEnMapa() {
     if (this.lugar) {
       const lat = this.lugar.latitude;

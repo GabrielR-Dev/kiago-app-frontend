@@ -22,6 +22,10 @@ export class IrPage implements OnInit {
   private lngFinal: number = 0;
   private marcador: L.CircleMarker | L.Marker | undefined
   urlRuta: string | null = null;
+  direccionDestino: string = '';
+  distanciaKm: number | null = null;
+  duracionTexto: string = '';
+  mostrarInfo: boolean = false;
 
 
   constructor(
@@ -44,21 +48,41 @@ export class IrPage implements OnInit {
     this.loadMap();
     this.lugares(this.latFinal, this.lngFinal);
     await this.getUserLocation();
-    // Llamar al servicio de LocationIQ para obtener la URL de la ruta
     if (this.latInicio && this.lngInicio && this.latFinal && this.lngFinal) {
       this.providerLocationiq.ruter(this.latInicio, this.lngInicio, this.latFinal, this.lngFinal).subscribe((data: any) => {
         this.urlRuta = data.url || JSON.stringify(data);
-        console.log('Respuesta LocationIQ:', data);
-        // Dibuja la ruta en el mapa
         if (data && data.routes && data.routes[0] && data.routes[0].geometry && data.routes[0].geometry.coordinates) {
-          // LocationIQ devuelve [lng, lat], Leaflet espera [lat, lng]
           const coords = data.routes[0].geometry.coordinates.map((c: number[]) => [c[1], c[0]]);
           L.polyline(coords, { color: 'blue', weight: 5 }).addTo(this.map!);
-          // Ajusta el mapa para mostrar toda la ruta
           this.map!.fitBounds(L.polyline(coords).getBounds(), { padding: [30, 30] });
         }
       });
+      // Obtener distancia, duración y dirección
+      this.providerLocationiq.obtenerDistancia(this.latInicio, this.lngInicio, this.latFinal, this.lngFinal).subscribe((data: any) => {
+        if (data && data.routes && data.routes[0]) {
+          const distanciaMetros = data.routes[0].distance;
+          const duracionSegundos = data.routes[0].duration;
+          this.distanciaKm = (distanciaMetros / 1000);
+          // Formatear duración a h y min
+          const horas = Math.floor(duracionSegundos / 3600);
+          const minutos = Math.round((duracionSegundos % 3600) / 60);
+          this.duracionTexto = `${horas > 0 ? horas + ' h ' : ''}${minutos} min`;
+        }
+        // Obtener dirección destino (reverse geocoding)
+        this.obtenerDireccionDestino();
+        this.mostrarInfo = true;
+      });
     }
+  }
+
+  obtenerDireccionDestino() {
+    // Usar LocationIQ reverse geocoding para obtener la dirección del destino
+    const url = `https://us1.locationiq.com/v1/reverse?key=pk.d43a155e214a7ca6a1b6b41cd30d76be&lat=${this.latFinal}&lon=${this.lngFinal}&format=json`;
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        this.direccionDestino = data.display_name || '';
+      });
   }
 
   private lat = this.latFinal // Latitud de BsAs
@@ -83,18 +107,27 @@ export class IrPage implements OnInit {
 
 
 
-  lugares(lat: number, lng: number) {
-
-    const markerLugar = L.marker([lat, lng], {
-      icon: L.icon({
-        iconUrl: 'assets/icon/favicon.png',
-        iconSize: [25, 25],
-        iconAnchor: [12, 25],
-        popupAnchor: [0, -25],
-      })
-    })
-
-    markerLugar.addTo(this.map!);
+  lugares(lat: number, lng: number, esUsuario: boolean = false) {
+    let marker;
+    if (esUsuario) {
+      marker = L.circleMarker([lat, lng], {
+        radius: 12,
+        color: '#d32f2f',
+        fillColor: '#d32f2f',
+        fillOpacity: 0.9,
+        weight: 2
+      });
+    } else {
+      marker = L.marker([lat, lng], {
+        icon: L.icon({
+          iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+          iconSize: [40, 40], // mismo tamaño que menu-mapa
+          iconAnchor: [20, 40],
+          popupAnchor: [0, -40],
+        })
+      });
+    }
+    marker.addTo(this.map!);
   };
 
 
@@ -106,11 +139,10 @@ export class IrPage implements OnInit {
       console.log('Ubicación del usuario:', latitude, longitude);
       this.latInicio = latitude;
       this.lngInicio = longitude;
-      // Centrar el mapa en la ubicación del usuario si está disponible
       if (this.map && latitude && longitude) {
         this.map.setView([latitude, longitude], 15);
       }
-      this.lugares(this.latInicio, this.lngInicio);
+      this.lugares(this.latInicio, this.lngInicio, true); // esUsuario = true
     } catch (error) {
       console.error('No se pudo obtener la ubicación del usuario:', error);
     }
