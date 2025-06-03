@@ -1,0 +1,64 @@
+<app-header title="Registro"></app-header>
+<ion-content>
+  <div class="d-flex-center">
+    <form [formGroup]="form" (ngSubmit)="submit()" (keypress.enter)="submit()">
+      <app-input
+        autocomplete="email"
+        icon="mail-outline"
+        [control]="form.controls.email"
+        type="email"
+        label="Correo"
+      >
+      </app-input>
+
+      <div
+        class="validators"
+        *ngIf="form.controls.email.errors && form.controls.email.touched"
+      >
+        <div *ngIf="form.controls.email.errors?.['required']">
+          correo requerido
+        </div>
+        <div *ngIf="form.controls.email.errors?.['email']">
+          Ingrese correo valido
+        </div>
+      </div>
+      <!--<div class="validators" *ngif="forms.control.email.errors && forms.control.emails.touched">
+
+            <div *ngif="forms.control.email.errors?.['required']">
+                correo requerido
+            </div>
+            <div *ngif="forms.control.email.errors?.['email']">
+                Ingrese correo valido
+            </div>
+
+        </div>
+-->
+      <app-input
+        icon="lock-closed-outline"
+        [control]="form.controls.password"
+        type="password"
+        label="Contraseña"
+      ></app-input>
+      <div
+        class="validators"
+        *ngIf="form.controls.email.errors && form.controls.email.touched"
+      >
+        <div *ngIf="form.controls.password.errors?.['required']">
+          password requerida
+        </div>
+       
+      </div>
+      <ion-button
+        expand="block"
+        shape="round"
+        class="submit"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Registrarse
+     
+        <ion-icon slot="end" name="person-add-outline"></ion-icon>
+       </ion-button>
+    </form>
+  </div>
+</ion-content>
