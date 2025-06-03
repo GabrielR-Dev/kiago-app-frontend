@@ -2,7 +2,6 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import * as L from 'leaflet';
 import { GpsLocationService } from '../../services/location/gps-location.service';
 import { ProviderLugaresService } from 'src/app/services/lugares/provider-lugares.service';
-import { Lugar } from 'src/app/models/lugar.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,6 +13,7 @@ import { Router } from '@angular/router';
 export class MenuMapaPage implements OnInit {
   // Definición de variables
   private map: L.Map | undefined;
+  filtroSeleccionado: string = '';
 
   constructor(
     private gpsLocationService: GpsLocationService,
@@ -22,7 +22,7 @@ export class MenuMapaPage implements OnInit {
     private ngZone: NgZone
   ) { }
 
-  
+
   ngOnInit() {
     // Obtener la ubicación del usuario al iniciar
     // Escuchar el evento personalizado para navegación desde el popup
@@ -32,13 +32,11 @@ export class MenuMapaPage implements OnInit {
         this.router.navigate(['/view-lugar', id]);
       });
     });
-    // Obtener la ubicación de los lugares desde la API
-    this.providerLugares.verLuagares().subscribe((lugares: Lugar[]) => {
-      console.log('Lugares desde la API:', lugares);
+    // Usar OpenTripMap para obtener lugares cercanos
+    this.providerLugares.verLuagares(this.lat, this.lng).subscribe((lugares) => {
+      console.log('Lugares desde OpenTripMap:', lugares);
       this.lugares(lugares);
     });
-
-
   }
 
   // Renderizar el mapa una vez que se haya cargado el HTML
@@ -50,10 +48,12 @@ export class MenuMapaPage implements OnInit {
   private lng = -58.38; // Longitud de BsAs
   private primeraEntrada: boolean = true;
   private marcador: L.CircleMarker | L.Marker | undefined;
+  private markers: L.Marker[] = [];
 
 
   async loadMap() {
-    this.map = L.map('map').setView([this.lat, this.lng], 13); //Ubicar en Bs As por defecto
+    this.map = L.map('map').setView([this.lat, this.lng], 15); //Ubicar en Bs As por defecto
+
 
     // Cargar el mapa
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -78,29 +78,31 @@ export class MenuMapaPage implements OnInit {
       const { latitude, longitude } = await this.gpsLocationService.miPosicion();
       console.log('Ubicación del usuario:', latitude, longitude);
 
+
       const permiso = await navigator.permissions.query({ name: 'geolocation' });
       console.log(permiso.state);
 
       if (this.map) {
-
+        // Centrar y marcar la ubicación del usuario
         if (permiso.state != 'denied' && this.primeraEntrada == true) {
           this.map.setView([latitude, longitude], 15);
           this.marcador = L.circleMarker([latitude, longitude]).addTo(this.map).bindPopup('Estás aquí');
-
           this.primeraEntrada = true;
         }
-
-        // Solo centrar la primera vez
         if (this.primeraEntrada) {
           this.map.setView([latitude, longitude], 20);
           this.primeraEntrada = false;
         }
-
-        // Si ya hay un marcador lo movemos
         if (this.marcador) {
           this.marcador.setLatLng([latitude, longitude]);
           console.log(this.marcador.setLatLng([latitude, longitude]));
         }
+        // Recargar lugares cercanos a la nueva ubicación con un rango aún más amplio (por ejemplo, 8000 metros)
+        this.providerLugares.verLuagares(latitude, longitude, 8000).subscribe((lugares) => {
+          // Guardar en localStorage para acceso en detalle
+          localStorage.setItem('lugares_otm', JSON.stringify(lugares));
+          this.lugares(lugares);
+        });
       }
     } catch (error) {
       console.error('Error al tratar de encontrar la ubicación::', error);
@@ -108,32 +110,32 @@ export class MenuMapaPage implements OnInit {
   }
 
   // Marca en el mapa los puntos del array de lugares de la API
-  lugares(lugaresArray: Lugar[]) {
-    //
+  lugares(lugaresArray: any[]) {
     if (!this.map) return;
-
+    // Eliminar marcadores anteriores
+    this.markers.forEach(marker => this.map!.removeLayer(marker));
+    this.markers = [];
     lugaresArray.forEach(lugar => {
-
-      const marker = L.marker([lugar.latitude, lugar.longitude], {
+      const marker = L.marker([lugar.point.lat, lugar.point.lon], {
         icon: L.icon({
-          iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', // Icono rojo de marcador
+          iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
           iconSize: [32, 32],
           iconAnchor: [16, 32],
           popupAnchor: [0, -32],
         })
       }).addTo(this.map!);
-
-      // Usar <a> y evento personalizado para navegación
       const popupContent = `
         <div style="text-align:center;">
           <strong>${lugar.name || 'Lugar'}</strong><br>
-          <a style="color:blue;text-decoration:underline;margin-top:5px;display:inline-block;cursor:pointer;" onclick="window.dispatchEvent(new CustomEvent('verLugar', { detail: ${lugar.id} }))">Ver</a>
+          <a style="color:blue;text-decoration:underline;margin-top:5px;display:inline-block;cursor:pointer;" onclick="window.dispatchEvent(new CustomEvent('verLugar', { detail: '${lugar.xid}' }))">Ver</a>
         </div>
       `;
-      // Agregar el contenido del popup al marcador
       marker.bindPopup(popupContent);
+      this.markers.push(marker);
     });
   }
+
+
 
 
 }

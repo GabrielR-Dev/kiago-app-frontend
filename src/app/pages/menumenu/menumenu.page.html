@@ -6,9 +6,27 @@
         <ion-icon name="person-circle"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons slot="end">
+     <ion-buttons slot="end">
       <ion-button expand="block" fill="outline">FILTRO</ion-button>
+
+      <ion-item>
+        <ion-label>Tipo</ion-label>
+        <ion-select [(ngModel)]="filtroSeleccionado" interface="popover" (ionChange)="cargarVista()">
+          <ion-select-option value="architecture">Arquitectura</ion-select-option>
+          <ion-select-option value="cultural">Cultural</ion-select-option>
+          <ion-select-option value="historic">Histórico</ion-select-option>
+          <ion-select-option value="natural">Naturaleza</ion-select-option>
+          <ion-select-option value="foods">Comida</ion-select-option>
+          <ion-select-option value="monuments">Monumentos</ion-select-option>
+          <ion-select-option value="religion">Religioso</ion-select-option>
+          <ion-select-option value="museums">Museos</ion-select-option>
+          <ion-select-option value="urban_environment">Ambiente urbano</ion-select-option>
+          <ion-select-option value="interesting_places">Lugares interesantes</ion-select-option>
+        </ion-select>
+      </ion-item>
+      
     </ion-buttons>
+
   </ion-toolbar>
 
 
@@ -63,7 +81,7 @@
     </ion-card-content>
     <ion-button fill="clear">Ver Más</ion-button>
   </ion-card>
- 
+
 
 
   <ion-card>
