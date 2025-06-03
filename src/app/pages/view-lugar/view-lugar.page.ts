@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProviderLugaresService } from 'src/app/services/lugares/provider-lugares.service';
-import { Lugar } from 'src/app/models/lugar.model';
 
 @Component({
   selector: 'app-view-lugar',
@@ -10,7 +9,7 @@ import { Lugar } from 'src/app/models/lugar.model';
   standalone: false,
 })
 export class ViewLugarPage implements OnInit {
-  lugar: Lugar | undefined;
+  lugar: any; // Cambiado a any para la estructura OpenTripMap
   comentarios: any[] = [];
   fotos: any[] = [];
 
@@ -24,29 +23,19 @@ export class ViewLugarPage implements OnInit {
     // Obtener el ID del lugar desde la URL
     const id = this.route.snapshot.paramMap.get('id');
     console.log('ID recibido:', id);
-
-    // Verificar si el ID es válido y cargar los datos del lugar
     if (id) {
-      this.providerLugares.verLugar(+id).subscribe((lugar: Lugar) => {
-        this.lugar = lugar;
-      });
-      this.providerLugares.verComentarios(+id).subscribe((comentarios: any[]) => {
-        this.comentarios = comentarios;
-      });
-      this.providerLugares.verFotos(+id).subscribe((fotos: any[]) => {
-        this.fotos = fotos;
+      // Obtener detalles del lugar desde OpenTripMap
+      this.providerLugares.verLugarDetalle(id).subscribe((detalle: any) => {
+        this.lugar = detalle;
       });
     }
   }
-
-  // Método para abrir el mapa en la ubicación del lugar
-  // y mostrar la ruta desde la ubicación actual
   abrirEnMapa() {
-    if (this.lugar) {
-      const lat = this.lugar.latitude;
-      const lng = this.lugar.longitude;
-      const id = this.lugar.id;
-      this.router.navigate([`/view-lugar/${id}/ir`], { queryParams: { lat, lng } });
+    if (this.lugar && this.lugar.point) {
+      const lat = this.lugar.point.lat;
+      const lng = this.lugar.point.lon;
+      const id = this.lugar.xid;
+      this.router.navigate([`/view-lugar`, id, 'ir', lat, lng]);
     }
   }
 

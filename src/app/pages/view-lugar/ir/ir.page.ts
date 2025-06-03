@@ -45,34 +45,48 @@ export class IrPage implements OnInit {
 
   //Renderizar el mapa una vez que se haya cargado el HTML
   async ngAfterViewInit() {
+
     this.loadMap();
     this.lugares(this.latFinal, this.lngFinal);
     await this.getUserLocation();
-    if (this.latInicio && this.lngInicio && this.latFinal && this.lngFinal) {
+    setInterval(() => {
+
+
       this.providerLocationiq.ruter(this.latInicio, this.lngInicio, this.latFinal, this.lngFinal).subscribe((data: any) => {
         this.urlRuta = data.url || JSON.stringify(data);
-        if (data && data.routes && data.routes[0] && data.routes[0].geometry && data.routes[0].geometry.coordinates) {
-          const coords = data.routes[0].geometry.coordinates.map((c: number[]) => [c[1], c[0]]);
-          L.polyline(coords, { color: 'blue', weight: 5 }).addTo(this.map!);
-          this.map!.fitBounds(L.polyline(coords).getBounds(), { padding: [30, 30] });
-        }
-      });
-      // Obtener distancia, duración y dirección
-      this.providerLocationiq.obtenerDistancia(this.latInicio, this.lngInicio, this.latFinal, this.lngFinal).subscribe((data: any) => {
-        if (data && data.routes && data.routes[0]) {
-          const distanciaMetros = data.routes[0].distance;
-          const duracionSegundos = data.routes[0].duration;
-          this.distanciaKm = (distanciaMetros / 1000);
-          // Formatear duración a h y min
-          const horas = Math.floor(duracionSegundos / 3600);
-          const minutos = Math.round((duracionSegundos % 3600) / 60);
-          this.duracionTexto = `${horas > 0 ? horas + ' h ' : ''}${minutos} min`;
-        }
-        // Obtener dirección destino (reverse geocoding)
+        //if (data && data.routes && data.routes[0] && data.routes[0].geometry && data.routes[0].geometry.coordinates) {
+        const coords = data.routes[0].geometry.coordinates.map((c: number[]) => [c[1], c[0]]);
+        L.polyline(coords, { color: 'blue', weight: 5 }).addTo(this.map!);
+        this.map!.fitBounds(L.polyline(coords).getBounds(), { padding: [30, 30] });
+        //}
+
+      }
+      );
+    }, 1000);
+
+
+
+    //if (this.latInicio && this.lngInicio && this.latFinal && this.lngFinal) {
+
+
+
+    // Obtener distancia, duración y dirección
+    this.providerLocationiq.obtenerDistancia(this.latInicio, this.lngInicio, this.latFinal, this.lngFinal).subscribe((data: any) => {
+      const distanciaMetros = data.routes[0].distance;
+      const duracionSegundos = data.routes[0].duration;
+      this.distanciaKm = (distanciaMetros / 1000);
+      // Formatear duración a h y min
+      const horas = Math.floor(duracionSegundos / 3600);
+      const minutos = Math.round((duracionSegundos % 3600) / 60);
+      this.duracionTexto = `${horas > 0 ? horas + ' h ' : ''}${minutos + 10} min`;
+      this.mostrarInfo = true;
+
+    setTimeout(() => {
         this.obtenerDireccionDestino();
-        this.mostrarInfo = true;
-      });
-    }
+
+      }, 100);
+    });
+    //}
   }
 
   obtenerDireccionDestino() {
@@ -91,7 +105,7 @@ export class IrPage implements OnInit {
 
 
   async loadMap() {
-    this.map = L.map('map').setView([this.lat, this.lng], 13); 
+    this.map = L.map('map').setView([this.lat, this.lng], 13);
 
     // Cargar el mapa
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -132,7 +146,7 @@ export class IrPage implements OnInit {
 
 
 
-
+  //Esto devuelve la ubicacion del usuario
   async getUserLocation() {
     try {
       const { latitude, longitude } = await this.gpsLocationService.miPosicion();

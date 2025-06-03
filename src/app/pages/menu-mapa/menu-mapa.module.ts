@@ -16,6 +16,6 @@ import { MenuMapaPage } from './menu-mapa.page';
     MenuMapaPageRoutingModule,
     
   ],
-  declarations: [MenuMapaPage]
+  declarations: [MenuMapaPage,]
 })
 export class MenuMapaPageModule {}

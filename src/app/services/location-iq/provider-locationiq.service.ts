@@ -27,4 +27,6 @@ export class ProviderLocationiqService {
     return this.http.get(url);
   }
 
+
+
 }

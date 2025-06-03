@@ -8,7 +8,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content *ngIf="lugar">
+  <!--<ion-content *ngIf="lugar">
     <ion-card>
       <ion-card-header>
         <ion-card-title>{{ lugar.name }}</ion-card-title>
@@ -51,7 +51,44 @@
         </ion-list>
       </ion-card-content>
     </ion-card>
-  </ion-content>
+  </ion-content>-->
+  <ion-content *ngIf="lugar">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ lugar.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p *ngIf="lugar.address">
+        <strong>Dirección:</strong>
+        {{ lugar.address.road || '' }} {{ lugar.address.house_number || '' }}
+        {{ lugar.address.city || '' }} {{ lugar.address.state || '' }}
+      </p>
+      <p *ngIf="lugar.wikipedia_extract">
+      <!--<p *ngIf="lugar.wikipedia_extracts">-->
+        <strong>Descripción:</strong> {{ lugar.wikipedia_extract.text }}
+      </p>
+      <p *ngIf="lugar.wikipedia">
+        <a [href]="lugar.wikipedia" target="_blank">Ver en Wikipedia</a>
+      </p>
+      <p *ngIf="lugar.point"><strong>Latitud:</strong> {{ lugar.point.lat }}</p>
+      <p *ngIf="lugar.point"><strong>Longitud:</strong> {{ lugar.point.lon }}</p>
+      <ion-button color="primary" (click)="abrirEnMapa()">Ir</ion-button>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="lugar.preview">
+    <ion-card-header>
+      <ion-card-title>Foto</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <img [src]="lugar.preview.source" alt="Foto del lugar" style="width: 50%; max-width: 400px; border-radius: 8px;" />
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-content *ngIf="!lugar">
+  <ion-text color="danger">
+    <h2 class="ion-text-center">No se encontró el lugar.</h2>
+  </ion-text>
+</ion-content>
   <ion-content *ngIf="!lugar">
     <ion-text color="danger">
       <h2 class="ion-text-center">No se encontró el lugar.</h2>
