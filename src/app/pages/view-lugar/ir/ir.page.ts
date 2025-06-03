@@ -49,9 +49,7 @@ export class IrPage implements OnInit {
     this.loadMap();
     this.lugares(this.latFinal, this.lngFinal);
     await this.getUserLocation();
-    setInterval(() => {
-
-
+    setTimeout(() => {
       this.providerLocationiq.ruter(this.latInicio, this.lngInicio, this.latFinal, this.lngFinal).subscribe((data: any) => {
         this.urlRuta = data.url || JSON.stringify(data);
         //if (data && data.routes && data.routes[0] && data.routes[0].geometry && data.routes[0].geometry.coordinates) {
@@ -62,7 +60,7 @@ export class IrPage implements OnInit {
 
       }
       );
-    }, 1000);
+    }, 3000);
 
 
 
@@ -81,7 +79,7 @@ export class IrPage implements OnInit {
       this.duracionTexto = `${horas > 0 ? horas + ' h ' : ''}${minutos + 10} min`;
       this.mostrarInfo = true;
 
-    setTimeout(() => {
+      setTimeout(() => {
         this.obtenerDireccionDestino();
 
       }, 100);
