@@ -4,4 +4,5 @@ export interface Comentario {
   uid: string;
   comentario: string;
   fecha: any;
+  nombreLugar?:string;
 }

@@ -39,24 +39,32 @@ export class MenuMapaPage implements OnInit {
       console.log('Lugares desde OpenTripMap:', lugares);
       this.lugares(lugares);
     });*/
+    if (!sessionStorage.getItem('mapaRecargado')) {
+      sessionStorage.setItem('mapaRecargado', 'true');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } else {
+      sessionStorage.removeItem('mapaRecargado');
+    }
   }
 
   // Renderizar el mapa una vez que se haya cargado el HTML
-async ngAfterViewInit() {
-  // Prevenimos el error: "Map container is already initialized"
-  const container = document.getElementById('map') as any;
-  if (container && container._leaflet_id) {
-    container._leaflet_id = null;
+  ngAfterViewInit() {
+    // Prevenimos el error: "Map container is already initialized"
+    const container = document.getElementById('map') as any;
+    if (container && container._leaflet_id) {
+      container._leaflet_id = null;
+    }
+
+    this.loadMap(); // Esperamos que el mapa se cargue
+
+    // Ahora sí pedimos los lugares
+    this.providerLugares.verLuagares(this.lat, this.lng).subscribe((lugares) => {
+      console.log('Lugares desde OpenTripMap:', lugares);
+      this.lugares(lugares); // Asegurado que this.map ya está definido
+    });
   }
-
-  await this.loadMap(); // Esperamos que el mapa se cargue
-
-  // Ahora sí pedimos los lugares
-  this.providerLugares.verLuagares(this.lat, this.lng).subscribe((lugares) => {
-    console.log('Lugares desde OpenTripMap:', lugares);
-    this.lugares(lugares); // Asegurado que this.map ya está definido
-  });
-}
 
   ionViewWillLeave() {
     if (this.map) {
@@ -156,6 +164,8 @@ async ngAfterViewInit() {
       console.warn('No se seleccionó ningún filtro');
       return;
     }
+
+
     //Peticion
     this.providerLugares.lugaresFiltrados(this.lat, this.lng, this.filtroSeleccionado).subscribe({
       next: (lugares) => {

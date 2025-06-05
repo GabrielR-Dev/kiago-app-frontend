@@ -4,20 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { IrPageRoutingModule } from './ir-routing.module';
+import { VisitadosPageRoutingModule } from './visitados-routing.module';
 
-import { IrPage } from './ir.page';
+import { VisitadosPage } from './visitados.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    IrPageRoutingModule,
-    CommonModule,
-    FormsModule,
-    IonicModule,
+    VisitadosPageRoutingModule
   ],
-  declarations: [IrPage]
+  declarations: [VisitadosPage]
 })
-export class IrPageModule { }
+export class VisitadosPageModule {}

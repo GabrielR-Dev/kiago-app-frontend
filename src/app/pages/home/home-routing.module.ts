@@ -18,7 +18,7 @@ const routes: Routes = [
       },
       {
         path: 'mis-salidas',
-        loadChildren: () => import('../../pages/mis-salidas/mis-salidas.module').then(m => m.MisSalidasPageModule)
+        loadChildren: () => import('../../pages/visitados/visitados.module').then(m => m.VisitadosPageModule)
       },
       { path: '', redirectTo: 'menu', pathMatch: 'full' },
       {

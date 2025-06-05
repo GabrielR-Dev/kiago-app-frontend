@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Comentario } from 'src/app/models/comentario';
 import { LugarOTM } from 'src/app/models/LugarOTM';
+import { FirebaseService } from 'src/app/services/firebase/firebase.service';
 
 import { GpsLocationService } from 'src/app/services/location/gps-location.service';
 import { ProviderLugaresService } from 'src/app/services/lugares/provider-lugares.service';
@@ -12,7 +14,7 @@ import { ProviderLugaresService } from 'src/app/services/lugares/provider-lugare
   standalone: false,
 })
 export class MenumenuPage implements OnInit {
-
+  
   lugares!: LugarOTM[];
   filtroSeleccionado: string = '';
   latitude!: number;
@@ -70,6 +72,7 @@ export class MenumenuPage implements OnInit {
       this.router.navigate([`/view-lugar/${xid}`]);
     }
   }
+
 
 
 }

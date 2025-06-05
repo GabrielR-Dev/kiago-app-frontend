@@ -41,6 +41,15 @@ export class IrPage implements OnInit {
     //Coordenadas pasadas por URL del Lugar hacia donde se desea ir
     this.latFinal = Number(this.route.snapshot.paramMap.get('lat'));
     this.lngFinal = Number(this.route.snapshot.paramMap.get('lng'));
+        //Logica para borrar mapa antes de cargar uno nuevo
+    if (!sessionStorage.getItem('mapaRecargado')) {
+      sessionStorage.setItem('mapaRecargado', 'true');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } else {
+      sessionStorage.removeItem('mapaRecargado');
+    }
   }
 
 
@@ -96,9 +105,9 @@ export class IrPage implements OnInit {
 
   async loadMap() {
 
-    if (this.map) {
+    /*if (this.map) {
       this.map.remove(); // Destruye el mapa anterior si ya existe
-    }
+    }*/
 
     this.map = L.map('map').setView([this.lat, this.lng], 13);
 

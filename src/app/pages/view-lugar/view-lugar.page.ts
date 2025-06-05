@@ -1,10 +1,9 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProviderLugaresService } from 'src/app/services/lugares/provider-lugares.service';
-
-// Import Firestore y Auth de Firebase
 import { NgIfContext } from '@angular/common';
-
+import { FirebaseService } from 'src/app/services/firebase/firebase.service';
+import { Comentario } from 'src/app/models/comentario';
 
 @Component({
   selector: 'app-view-lugar',
@@ -13,45 +12,50 @@ import { NgIfContext } from '@angular/common';
   standalone: false,
 })
 export class ViewLugarPage implements OnInit {
-  lugar: any; // Datos del lugar
-  comentarios: any[] = [];
+  lugar: any;
+  comentarios: Comentario[] = [];
   fotos: any[] = [];
-
   nuevoComentario: string = '';
   isLoading: any;
   cargando: TemplateRef<NgIfContext<boolean>> | null | undefined;
+  comentario: Comentario | undefined;
 
   constructor(
     private route: ActivatedRoute,
     private providerLugares: ProviderLugaresService,
     private router: Router,
+    private firebaseSvc: FirebaseService
   ) { }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    console.log('ID recibido:', id);
     if (id) {
       this.cargarLugar(id);
     }
-  if (!sessionStorage.getItem('mapaRecargado')) {
-    sessionStorage.setItem('mapaRecargado', 'true');
-    setTimeout(() => {
-      window.location.reload();
-    }, 20);
-  } else {
-    // Ya se recargó una vez, limpia la bandera para futuras visitas
-    sessionStorage.removeItem('mapaRecargado');
-    // Continúa con la carga normal sin recargar
   }
-  }
+
 
   cargarLugar(id: string) {
     this.providerLugares.verLugarDetalle(id).subscribe((detalle: any) => {
       this.lugar = detalle;
+      this.cargarComentarios(); // Comentarios después de tener el lugar
     });
   }
 
 
+
+  //Trae los comentarios del un lugar
+  cargarComentarios() {
+    if (this.lugar?.xid) {
+      this.firebaseSvc
+        .getComentariosPorLugar(this.lugar.xid)
+        .then((comentarios) => {
+          this.comentarios = comentarios;
+        });
+    }
+  }
+
+  //Dirije a la pagina del recorrido en el mapa
   abrirEnMapa() {
     if (this.lugar && this.lugar.point) {
       const lat = this.lugar.point.lat;
@@ -61,10 +65,30 @@ export class ViewLugarPage implements OnInit {
     }
   }
 
+  // Agrega datos del comentario
   agregarComentario() {
-    alert('Para poder comentar debes abonar la sucripcion: Transferir al CBU 01703168400000042952828');
-    this.nuevoComentario = "";
+    const uid = localStorage.getItem('userUid');
+    const nombreLugar = localStorage.getItem('userUid');
+    if (!uid) {
+      alert('Debes iniciar sesión para comentar.');
+      return;
+    }
+    if (!this.nuevoComentario.trim()) {
+      alert('El comentario no puede estar vacío.');
+      return;
+    }
+
+    const comentario: Comentario = {
+      xid: this.lugar.xid,
+      uid: uid,
+      comentario: this.nuevoComentario.trim(),
+      nombreLugar: this.lugar.name,
+      fecha: new Date()
+    };
+
+    this.firebaseSvc.addComentario(comentario).then(() => {
+      this.nuevoComentario = '';
+      this.cargarComentarios(); // Recargar los comentarios
+    });
   }
-
-
 }
