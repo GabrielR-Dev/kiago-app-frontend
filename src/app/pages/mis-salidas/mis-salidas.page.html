@@ -1,4 +1,15 @@
-<ion-header [translucent]="true">
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="titleLogo">
+      <div class="divHeader">
+        <img src="assets/img/LogoSinFondo.png" alt="Logo de la app">
+        <span>KIAGO</span>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-header>
   <ion-toolbar>
     <ion-title>
       A dónde has ido
@@ -6,7 +17,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="fondo">
 
   <ion-card class="contenedor-card">
     <ion-card-header>
@@ -16,7 +27,7 @@
     <ion-card-content class="contenedor-scroll">
       <p *ngIf="listaFavoritosCarga.length === 0">No hay favoritos para mostrar.</p>
 
-      <ion-list>
+      <ion-list class="item-color">
         <ion-item *ngFor="let favorito of listaFavoritosCarga">
           <ion-label>{{ favorito.nombre }}</ion-label>
           <ion-label>{{ favorito.id }}</ion-label>
@@ -40,7 +51,7 @@
     <ion-card-content class="contenedor-scroll">
       <p *ngIf="listaComentariosCarga.length === 0">No hay favoritos para mostrar.</p>
 
-      <ion-list>
+      <ion-list class="item-color">
 
         <ion-item *ngFor="let comentario of listaComentariosCarga">
           <ion-label>

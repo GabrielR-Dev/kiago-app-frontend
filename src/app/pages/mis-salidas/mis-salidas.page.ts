@@ -58,6 +58,7 @@ export class MisSalidasPage implements OnInit {
               this.listaFavoritos.push(this.favorito);
             }
           }
+<<<<<<< HEAD
         ]
       });
       await alert.present();
@@ -121,4 +122,56 @@ export class MisSalidasPage implements OnInit {
       localStorage.setItem('comentarios', JSON.stringify(listaActualizada))
     }
   
+=======
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+
+  //lo que sucede es que, automaticamente cuando arranca esta página, lo que haya en favoritos se pasa a
+  //la variable listaFavoritos la cual va a ser con la que laburemos aca (lo mismo aplicaria a comentarios)
+  ngOnInit() {
+    //this.listaFavoritos = JSON.parse(localStorage.getItem('favoritos') || '[]')
+    //this.listaComentarios = JSON.parse(localStorage.getItem('comentarios') || '[]')
+    this.listaFavoritosCarga.push(...this.cargarMasDatos.cargarInicial(this.listaFavoritos, this.listaFavoritosCarga))
+    this.listaComentariosCarga.push(...this.cargarMasDatos.cargarInicial(this.listaComentarios, this.listaComentariosCarga))
+  }
+
+  //dado que los parametros de las funciones actualizan la variable original automaticamente, este cargarMas y el
+  //de los comentarios se podrian simplificar en uno solo.
+  cargarMasFavoritos() {
+    const carga = this.cargarMasDatos.cargarMas(this.listaFavoritos, this.listaFavoritosCarga);
+    this.listaFavoritosCarga.push(...carga);
+  }
+
+  cargarMasComentarios() {
+    const carga = this.cargarMasDatos.cargarMas(this.listaComentarios, this.listaComentariosCarga);
+    this.listaComentariosCarga.push(...carga)
+  }
+
+  detalle(idFav: any, lista: LugarTuristicoM[]) {
+    let detalle = lista.filter(item => item.nombre === idFav)
+    localStorage.setItem('detalle', JSON.stringify(detalle))
+    this.router.navigate(['/detalle', idFav]);
+  }
+
+  //recordad de cambiar el nombre por id cuando se complete el proyecto
+  eliminarFavorito(idFav: any, lista: LugarTuristicoM[]) {
+    let listaActualizada = lista.filter(item => item.nombre !== idFav);
+    this.listaFavoritosCarga = listaActualizada.slice(0, this.listaFavoritosCarga.length);
+    this.listaFavoritos = listaActualizada;
+    localStorage.setItem('favoritos', JSON.stringify(listaActualizada))
+  }
+
+  //para mas efectividad, el comentario se busca por id y por autor
+  eliminarComentario(idCom: any, autor: any, lista: ComentarioM[]) {
+    let listaActualizada = lista.filter(item => item.id !== idCom && item.autor !== autor);
+    this.listaComentariosCarga = listaActualizada.slice(0, this.listaComentariosCarga.length)
+    this.listaComentarios = listaActualizada;
+    localStorage.setItem('comentarios', JSON.stringify(listaActualizada))
+  }
+
+>>>>>>> estetica
 }
