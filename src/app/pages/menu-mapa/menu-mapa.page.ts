@@ -63,6 +63,7 @@ async ngAfterViewInit() {
       this.map.remove();
       this.map = undefined;
     }
+
   }
 
   private lat = -34.61; // Latitud de BsAs
@@ -70,8 +71,6 @@ async ngAfterViewInit() {
   private primeraEntrada: boolean = true;
   private marcador: L.CircleMarker | L.Marker | undefined;
   private markers: L.Marker[] = [];
-
-
 
   //Funcion carga el mapa
   loadMap() {
@@ -83,6 +82,7 @@ async ngAfterViewInit() {
     }
 
     //Crea el mapa en la etiqueta con el id map
+
     this.map = L.map('map').setView([this.lat, this.lng], 15); //Ubicar en Bs As por defecto
 
 
@@ -104,6 +104,7 @@ async ngAfterViewInit() {
 
 
 
+
   // Metodo para obtener la ubicación del usuario y centra el mapa
   async getUserLocation() {
     try {
@@ -114,6 +115,7 @@ async ngAfterViewInit() {
       this.lng = longitude;
 
       //Vemos si se permitio la ubicacion para ver si centramos el mapa en esa ubicacion
+
       const permiso = await navigator.permissions.query({ name: 'geolocation' });
       console.log(permiso.state);
 
@@ -170,6 +172,7 @@ async ngAfterViewInit() {
   lugares(lugaresArray: any[]) {
     if (!this.map) return;
     // Eliminar marcadores anteriores y con los lugares que se le pasan los marca devuelta
+
     this.markers.forEach(marker => this.map!.removeLayer(marker));
     this.markers = [];
     lugaresArray.forEach(lugar => {
@@ -181,8 +184,8 @@ async ngAfterViewInit() {
           popupAnchor: [0, -32],
         })
       }).addTo(this.map!);
-
       //Creamos un bindPopup para el marker en el mapa
+
       const popupContent = `
         <div style="text-align:center;">
           <strong>${lugar.name || 'Lugar'}</strong><br>

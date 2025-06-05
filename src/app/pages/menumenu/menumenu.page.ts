@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LugarOTM } from 'src/app/models/LugarOTM';
+
 import { GpsLocationService } from 'src/app/services/location/gps-location.service';
 import { ProviderLugaresService } from 'src/app/services/lugares/provider-lugares.service';
 
@@ -69,5 +70,6 @@ export class MenumenuPage implements OnInit {
       this.router.navigate([`/view-lugar/${xid}`]);
     }
   }
+
 
 }

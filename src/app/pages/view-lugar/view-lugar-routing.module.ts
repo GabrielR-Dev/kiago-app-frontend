@@ -8,6 +8,7 @@ const routes: Routes = [
   {
     path: 'ir/:lat/:lng',
     loadChildren: () => import('../ir/ir.module').then(m => m.IrPageModule),
+
   },
 
 ];

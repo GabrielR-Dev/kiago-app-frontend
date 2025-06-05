@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
+
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
@@ -19,7 +20,9 @@ const routes: Routes = [
   },
   {
     path: 'register',
+
     loadChildren: () => import('./pages/auth/sign-up/sign-up.module').then(m => m.SignUpPageModule)
+
   },
   {
     path: 'view-lugar/:id',
@@ -27,7 +30,6 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   
-
 ];
 
 @NgModule({

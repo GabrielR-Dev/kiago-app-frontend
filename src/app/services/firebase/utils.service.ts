@@ -13,6 +13,7 @@ export class UtilsService {
   loadingCtrl = inject(LoadingController);
   toastCtrl = inject(ToastController);
   router = inject(Router);
+
   //constructor() { }
   //loadingCtrl=inject(LoadingController)
   loading() {
@@ -39,3 +40,4 @@ export class UtilsService {
     return this.router.navigateByUrl(url);
   }
 }
+

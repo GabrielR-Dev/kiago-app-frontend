@@ -3,10 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProviderLugaresService } from 'src/app/services/lugares/provider-lugares.service';
 
 // Import Firestore y Auth de Firebase
-import { Timestamp } from '@angular/fire/firestore';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Comentario } from 'src/app/models/comentario';
 import { NgIfContext } from '@angular/common';
+
 
 @Component({
   selector: 'app-view-lugar',
@@ -52,6 +50,7 @@ export class ViewLugarPage implements OnInit {
       this.lugar = detalle;
     });
   }
+
 
   abrirEnMapa() {
     if (this.lugar && this.lugar.point) {

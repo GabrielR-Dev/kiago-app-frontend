@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LugarOTM } from 'src/app/models/LugarOTM';
 
-// Interfaz para el lugar de OpenTripMap
-
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +16,7 @@ export class ProviderLugaresService {
 
   // Obtener lugares cercanos usando OpenTripMap
   verLuagares(lat: number = -34.60346, lon: number = -58.38139, radius: number = 300, limit: number = 1000): Observable<LugarOTM[]> {
+
     const url = `${this.baseUrl}?radius=${radius}&lon=${lon}&lat=${lat}&rate=2&limit=${limit}&format=json&apikey=${this.apiKey}`;
     return this.http.get<LugarOTM[]>(url);
   }
@@ -46,3 +45,4 @@ export class ProviderLugaresService {
   }
   
 }
+
