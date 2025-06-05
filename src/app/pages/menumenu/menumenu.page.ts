@@ -14,6 +14,9 @@ export class MenumenuPage implements OnInit {
 
   lugares!: LugarOTM[];
   filtroSeleccionado: string = '';
+  latitude!: number;
+  longitude!: number;
+  lugarSeleccionado: any = null;
 
   constructor(
     private providerLugares: ProviderLugaresService,
@@ -22,9 +25,6 @@ export class MenumenuPage implements OnInit {
 
   ) { }
 
-  latitude!: number;
-  longitude!: number;
-  lugarSeleccionado: any = null;
 
   async ngOnInit() {
     const { latitude, longitude } = await this.miUbicacion.miPosicion();
@@ -42,7 +42,7 @@ export class MenumenuPage implements OnInit {
     });
 
   }
-
+  //Carga en la lista de lugares los lugares segun el filtro que se selecciono
   cargarVista() {
     console.log('Filtro actual:', this.filtroSeleccionado);
     this.lugares = []; // Limpia antes de cargar nuevos
@@ -62,6 +62,7 @@ export class MenumenuPage implements OnInit {
     }
   }
 
+  //Redirige a los detalles del lugar al que se le dio click
   verDetalles(xid?: string) {
     console.log('Redirigiendo a:', `/view-lugar/${xid}`);
     if (xid) {

@@ -9,6 +9,7 @@
     <ion-buttons slot="end">
       <ion-button expand="block" fill="outline">FILTRO</ion-button>
 
+      <!-- Lista de filtros llama al metodo cargarVista() -->
       <ion-item>
         <ion-label>Tipo</ion-label>
         <ion-select [(ngModel)]="filtroSeleccionado" interface="popover" (ionChange)="cargarVista()">

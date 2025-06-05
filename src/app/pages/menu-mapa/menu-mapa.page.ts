@@ -73,13 +73,16 @@ async ngAfterViewInit() {
 
 
 
+  //Funcion carga el mapa
   loadMap() {
 
+    //Destruye el mapa creado para que se pueda cargar uno nuevp
     const container = document.getElementById('map') as any;
     if (container && container._leaflet_id) {
       container._leaflet_id = null;
     }
 
+    //Crea el mapa en la etiqueta con el id map
     this.map = L.map('map').setView([this.lat, this.lng], 15); //Ubicar en Bs As por defecto
 
 
@@ -110,6 +113,7 @@ async ngAfterViewInit() {
       this.lat = latitude;
       this.lng = longitude;
 
+      //Vemos si se permitio la ubicacion para ver si centramos el mapa en esa ubicacion
       const permiso = await navigator.permissions.query({ name: 'geolocation' });
       console.log(permiso.state);
 

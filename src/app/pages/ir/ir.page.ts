@@ -26,6 +26,8 @@ export class IrPage implements OnInit {
   distanciaKm: number | null = null;
   duracionTexto: string = '';
   mostrarInfo: boolean = false;
+  private lat = this.latFinal // Latitud de BsAs
+  private lng = this.lngFinal // Longitud de BsAs
 
 
   constructor(
@@ -55,20 +57,12 @@ export class IrPage implements OnInit {
 
     this.providerLocationiq.ruter(this.latInicio, this.lngInicio, this.latFinal, this.lngFinal).subscribe((data: any) => {
       this.urlRuta = data.url || JSON.stringify(data);
-      //if (data && data.routes && data.routes[0] && data.routes[0].geometry && data.routes[0].geometry.coordinates) {
       const coords = data.routes[0].geometry.coordinates.map((c: number[]) => [c[1], c[0]]);
       L.polyline(coords, { color: 'blue', weight: 5 }).addTo(this.map!);
       this.map!.fitBounds(L.polyline(coords).getBounds(), { padding: [30, 30] });
-      //}
 
     }
     );
-
-
-
-    //if (this.latInicio && this.lngInicio && this.latFinal && this.lngFinal) {
-
-
 
     // Obtener distancia, duración y dirección
     this.providerLocationiq.obtenerDistancia(this.latInicio, this.lngInicio, this.latFinal, this.lngFinal).subscribe((data: any) => {
@@ -86,11 +80,10 @@ export class IrPage implements OnInit {
 
       }, 100);
     });
-    //}
   }
 
+  //Direcciones del destino para mostrar en mapa
   obtenerDireccionDestino() {
-    // Usar LocationIQ reverse geocoding para obtener la dirección del destino
     const url = `https://us1.locationiq.com/v1/reverse?key=pk.d43a155e214a7ca6a1b6b41cd30d76be&lat=${this.latFinal}&lon=${this.lngFinal}&format=json`;
     fetch(url)
       .then(res => res.json())
@@ -98,9 +91,6 @@ export class IrPage implements OnInit {
         this.direccionDestino = data.display_name || '';
       });
   }
-
-  private lat = this.latFinal // Latitud de BsAs
-  private lng = this.lngFinal // Longitud de BsAs
 
 
 
@@ -123,9 +113,7 @@ export class IrPage implements OnInit {
     }, 0);
 
   }
-
-
-
+  //Configuramos el marcador y agregamos al map
   lugares(lat: number, lng: number, esUsuario: boolean = false) {
     let marker;
     if (esUsuario) {
