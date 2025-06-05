@@ -28,15 +28,12 @@ iont-item {
   background-color: #3a7f7a;
 }
 
-.tituloHeader {
-  font-size: 32px;        /* Tamaño del texto */
-  text-align: center;     /* Centrar horizontalmente */
-  font-weight: bold;      /* (Opcional) Negrita */
-  margin: 20px 0;         /* (Opcional) Separación vertical */
-}
-
 ion-content {
     --background: #c7e2dd;
+}
+
+* {
+  color: #dddddd;
 }
 
 

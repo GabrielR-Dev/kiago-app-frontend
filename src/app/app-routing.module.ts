@@ -29,11 +29,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/view-lugar/view-lugar.module').then(m => m.ViewLugarPageModule),
     canActivate: [AuthGuard]
   },
-  /*{
-    path: 'mis-salidas',
-    loadChildren: () => import('./pages/visitados/visitados.module').then(m => m.VisitadosPageModule),
-    canActivate: [AuthGuard]
-  },*/
+
 
 
 ];
