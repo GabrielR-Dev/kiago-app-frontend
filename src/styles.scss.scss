@@ -1,0 +1,42 @@
+img {
+    width: 100%;
+    max-width: 75px;
+    border-radius: 10px;
+}
+
+.divHeader {
+    display: flex;
+    align-items: center;
+    background-color: #3a7f7a;
+    font-size: 32px;
+    font-weight: bold
+}
+
+.titleLogo {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+ion-toolbar,
+ion-card-content,
+ion-card-header,
+ion-list,
+iont-item {
+  --background: #3a7f7a;
+  background-color: #3a7f7a;
+}
+
+.tituloHeader {
+  font-size: 32px;        /* Tamaño del texto */
+  text-align: center;     /* Centrar horizontalmente */
+  font-weight: bold;      /* (Opcional) Negrita */
+  margin: 20px 0;         /* (Opcional) Separación vertical */
+}
+
+ion-content {
+    --background: #c7e2dd;
+}
+
+

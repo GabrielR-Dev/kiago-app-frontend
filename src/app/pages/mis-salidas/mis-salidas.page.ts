@@ -63,8 +63,6 @@ favorito: LugarTuristicoM = new LugarTuristicoM('');
     await alert.present();
   }
 
-  //cuando ya tenga objetos en el local storage favoritos, entonces borra ambas cargaIniciadora y sacar el // a lo
-  //que esta ngOnInit
 
   //lo que sucede es que, automaticamente cuando arranca esta página, lo que haya en favoritos se pasa a
   //la variable listaFavoritos la cual va a ser con la que laburemos aca (lo mismo aplicaria a comentarios)
@@ -73,18 +71,6 @@ favorito: LugarTuristicoM = new LugarTuristicoM('');
     //this.listaComentarios = JSON.parse(localStorage.getItem('comentarios') || '[]')
     this.listaFavoritosCarga.push(...this.cargarMasDatos.cargarInicial(this.listaFavoritos, this.listaFavoritosCarga))
     this.listaComentariosCarga.push(...this.cargarMasDatos.cargarInicial(this.listaComentarios, this.listaComentariosCarga))
-
-  }
-
-  cargaIniciadoraFav() {
-    for (let i = 0; i < 12; i++) {
-      this.listaFavoritos.push(new LugarTuristicoM(`Favorito ${i}`));
-    }
-    localStorage.setItem('favoritos', JSON.stringify(this.listaFavoritos))
-    for (let i = 0; i < 12; i++) {
-      this.listaComentarios.push(new ComentarioM(`Comentario ${i}`));
-    }
-    localStorage.setItem('comentarios', JSON.stringify(this.listaComentarios))
   }
 
   //dado que los parametros de las funciones actualizan la variable original automaticamente, este cargarMas y el

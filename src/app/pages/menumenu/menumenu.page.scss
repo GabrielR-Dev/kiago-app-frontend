@@ -1,44 +1,45 @@
-ion-content,ion-list,ion-item,ion-header,ion-toolbar {
-    
-
-    --background: none;
-    background-color: black;
-     color:rgb(255, 255, 255);
-     font-size: 50px;
- padding: 5px;
- text-align: center;
- 
+ion-content,
+ion-list,
+ion-item,
+ion-toolbar {
+    color: rgb(255, 255, 255);
+    text-align: center;
 }
 
-
-ion-icon{
+ion-icon {
     font-size: 50px;
 }
 
-#filtro{
-   display:flex;
-   padding-right:15px;
+#filtro {
+    display: flex;
+    padding-right: 15px;
 }
 
-ion-title{
+ion-title {
 
-   align-items: center;
-   font-size: large;
+    align-items: center;
+    font-size: large;
 }
 
-ion-item{
+ion-item {
     justify-content: space-evenly;
-    padding:15px;
+    padding: 15px;
 }
-ion-tab-button { ion-label { font-size: 12px; } }
+
+ion-tab-button {
+    ion-label {
+        font-size: 12px;
+    }
+}
 
 
 
 
-ion-header{
+ion-header {
     text-align: center;
 }
-ion-grid{
+
+ion-grid {
     text-align: center;
-    
+
 }

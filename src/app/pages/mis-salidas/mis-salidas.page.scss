@@ -9,12 +9,17 @@
   max-width: 800px;
   margin: 50px auto;
   margin-bottom: 75px;
+  
 }
 
 .item-titulo {
   font-weight: bold;
   font-size: 16px;
   max-width: 80%;
+}
+
+ion-list {
+  background-color: #3a7f7a;
 }
 
 .comentario-detalle {
