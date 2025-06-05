@@ -7,13 +7,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="!isLoading && lugar; else cargando">
+<ion-content *ngIf="lugar?.name; else cargando">
 
 
   <ion-card>
     <ion-img *ngIf="lugar.preview?.source" [src]="lugar.preview.source" alt="{{lugar.name}}"></ion-img>
-    <ion-card-header>
 
+    <ion-card-header>
       <ion-card-title>{{ lugar.name }}</ion-card-title>
       <ion-card-subtitle>{{ lugar.kinds }}</ion-card-subtitle>
     </ion-card-header>
@@ -47,6 +47,8 @@
   </ion-card>
 
   <!-- Información del lugar -->
+
+
   <ion-card>
     <ion-card-header>
       <ion-card-title>Agregar Comentario</ion-card-title>
@@ -65,18 +67,21 @@
   <!-- Lista de comentarios -->
   <ion-list>
     <ion-item *ngFor="let comentario of comentarios">
-      {{ comentario }}
+      <ion-label>
+        <h3>Usuario: {{ comentario.uid }}</h3>
+        <p>{{ comentario.comentario }}</p>
+        <small>{{ comentario.fecha?.toDate?.() ? (comentario.fecha.toDate() | date: 'short') : (comentario.fecha | date:
+          'short') }}</small>
+      </ion-label>
     </ion-item>
   </ion-list>
 
-</ion-content>
+</ion-content >
 
-
-<!-- Spinner de carga -->
-<ng-template #cargando>
-  <div class="cargando">
-    <ion-spinner name="crescent"></ion-spinner>
-    <p>Cargando detalles del lugar...</p>
-  </div>
-</ng-template>
-
+  <!-- Spinner de carga -->
+  <ng-template #cargando>
+    <div class="cargando">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Cargando detalles del lugar...</p>
+    </div>
+  </ng-template>

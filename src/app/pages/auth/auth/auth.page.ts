@@ -43,6 +43,7 @@ export class AuthPage implements OnInit {
           localStorage.setItem('userToken', token);
           localStorage.setItem('userEmail', res.user.email || '');
           localStorage.setItem('userUid', res.user.uid || '');
+          localStorage.setItem('nombreUsuario', res.user.uid || '');
 
           this.router.navigate(['/home']);
         })

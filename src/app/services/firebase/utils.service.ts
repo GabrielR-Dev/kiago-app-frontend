@@ -39,5 +39,6 @@ export class UtilsService {
   routerLink(url: string) {
     return this.router.navigateByUrl(url);
   }
+  
 }
 
