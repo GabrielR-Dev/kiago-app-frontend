@@ -1,0 +1,35 @@
+<div>
+
+  <!-- Dentro del ion-content se va a cargar los componentes menu, mapa, mis salidas-->
+  <ion-content>
+    <ion-router-outlet></ion-router-outlet>
+  </ion-content>
+
+  <!-- Los tabs van a estar en las 3 vistas. menu, mapa, mis salidas-->
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+
+      <ion-tab-button tab="menu" routerLink="/menu">
+        <ion-icon name="home"></ion-icon>
+        <ion-label>Menú</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="mapa">
+        <ion-icon name="map"></ion-icon>
+        <ion-label>Mapa</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="mis-salidas" routerLink="/home/mis-salidas">
+        <ion-icon name="walk"></ion-icon>
+        <ion-label>Mis Salidas</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="cerrarSesion()">
+        <ion-icon name="log-out-outline"></ion-icon>
+        <ion-label>Cerrar sesión</ion-label>
+      </ion-tab-button>
+      
+    </ion-tab-bar>
+  </ion-tabs>
+
+</div>

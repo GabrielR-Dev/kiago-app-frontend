@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+
+      <ion-title>Busca los lugares mas cercanos por filtro</ion-title>
+     <ion-buttons slot="end">
+      <ion-button expand="block" fill="outline">FILTRO</ion-button>
+
+      <ion-item>
+        <ion-label>Tipo</ion-label>
+        <ion-select [(ngModel)]="filtroSeleccionado" interface="popover" (ionChange)="cargarVista()">
+          <ion-select-option value="architecture">Arquitectura</ion-select-option>
+          <ion-select-option value="cultural">Cultural</ion-select-option>
+          <ion-select-option value="historic">Histórico</ion-select-option>
+          <ion-select-option value="natural">Naturaleza</ion-select-option>
+          <ion-select-option value="foods">Comida</ion-select-option>
+          <ion-select-option value="monuments">Monumentos</ion-select-option>
+          <ion-select-option value="religion">Religioso</ion-select-option>
+          <ion-select-option value="museums">Museos</ion-select-option>
+          <ion-select-option value="urban_environment">Ambiente urbano</ion-select-option>
+          <ion-select-option value="interesting_places">Lugares interesantes</ion-select-option>
+        </ion-select>
+      </ion-item>
+      
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content fullscreen>
+  <div id="map" class="map"></div>
+</ion-content>
+

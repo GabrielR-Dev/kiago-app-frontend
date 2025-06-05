@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home/mapa"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalles del Lugar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!isLoading && lugar; else cargando">
+
+
+  <ion-card>
+    <ion-img *ngIf="lugar.preview?.source" [src]="lugar.preview.source" alt="{{lugar.name}}"></ion-img>
+    <ion-card-header>
+
+      <ion-card-title>{{ lugar.name }}</ion-card-title>
+      <ion-card-subtitle>{{ lugar.kinds }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Dirección:</strong>
+        {{ lugar.address?.road || '' }} {{ lugar.address?.suburb || '' }},
+        {{ lugar.address?.city || '' }}, {{ lugar.address?.state || '' }}, {{ lugar.address?.country || '' }}
+      </p>
+
+
+      <ion-button [routerLink]="['/view-lugar', lugar.xid,'ir',lugar.point.lat,lugar.point.lon]"
+        routerDirection="forward">
+        Ir al Lugar
+      </ion-button>
+
+      <p *ngIf="lugar.wikipedia_extracts?.text">{{ lugar.wikipedia_extracts.text }}</p>
+
+      <p *ngIf="lugar.rate"><strong>Rating:</strong> {{ lugar.rate }}</p>
+
+      <p *ngIf="lugar.wikidata">
+        <a href="https://www.wikidata.org/wiki/{{ lugar.wikidata }}" target="_blank" rel="noopener noreferrer">Más
+          info
+          en Wikidata</a>
+      </p>
+
+      <p *ngIf="lugar.wikipedia">
+        <a [href]="lugar.wikipedia" target="_blank" rel="noopener noreferrer">Leer en Wikipedia</a>
+      </p>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Información del lugar -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Agregar Comentario</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-textarea placeholder="Escribe tu comentario..." [(ngModel)]="nuevoComentario" autoGrow="true">
+        </ion-textarea>
+      </ion-item>
+      <ion-button expand="block" (click)="agregarComentario()">
+        Enviar
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Lista de comentarios -->
+  <ion-list>
+    <ion-item *ngFor="let comentario of comentarios">
+      {{ comentario }}
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
+
+<!-- Spinner de carga -->
+<ng-template #cargando>
+  <div class="cargando">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando detalles del lugar...</p>
+  </div>
+</ng-template>

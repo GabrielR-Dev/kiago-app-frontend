@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-icon name="person-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button expand="block" fill="outline">FILTRO</ion-button>
+
+      <ion-item>
+        <ion-label>Tipo</ion-label>
+        <ion-select [(ngModel)]="filtroSeleccionado" interface="popover" (ionChange)="cargarVista()">
+          <ion-select-option value="architecture">Arquitectura</ion-select-option>
+          <ion-select-option value="cultural">Cultural</ion-select-option>
+          <ion-select-option value="historic">Histórico</ion-select-option>
+          <ion-select-option value="natural">Naturaleza</ion-select-option>
+          <ion-select-option value="foods">Comida</ion-select-option>
+          <ion-select-option value="monuments">Monumentos</ion-select-option>
+          <ion-select-option value="religion">Religioso</ion-select-option>
+          <ion-select-option value="museums">Museos</ion-select-option>
+          <ion-select-option value="urban_environment">Ambiente urbano</ion-select-option>
+          <ion-select-option value="interesting_places">Lugares interesantes</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+    </ion-buttons>
+
+  </ion-toolbar>
+
+</ion-header>
+<ion-content [fullscreen]="true">
+
+  <!-- Las cards se generan con los datos de la API -->
+  <ng-container *ngIf="lugares && lugares.length > 0; else sinResultados">
+    <ion-card *ngFor="let lugar of lugares">
+      <ion-card-header>
+        <ion-card-title>{{ lugar.name }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Distancia:</strong> {{ lugar.dist | number: '1.0-0' }} metros</p>
+        <p><strong>Rating:</strong> {{ lugar.rate }}</p>
+        <p><strong>Categorías:</strong> {{ lugar.kinds }}</p>
+        <ion-button fill="clear" (click)="verDetalles(lugar.xid)">Ver Más</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <!-- Mensaje cuando no hay resultados -->
+  <ng-template #sinResultados>
+    <ion-card>
+      <ion-card-content>
+        No se encontraron lugares para el filtro seleccionado.
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+
+</ion-content>
