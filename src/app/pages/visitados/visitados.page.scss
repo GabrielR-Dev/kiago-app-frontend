@@ -1,9 +1,8 @@
-ion-label,
-ion-card,
-ion-card-content,
-ion-card-header,
-ion-list,
-iont-item {
-  --background: #3a7f7a;
+ion-list {
   background-color: #3a7f7a;
+}
+
+ion-item::part(native) {
+  background-color: #3a7f7a;
+  --inner-border-width: 0px;
 }

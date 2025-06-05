@@ -52,3 +52,7 @@ ion-grid {
 .espacio {
     margin-left: -40px;
 }
+
+ion-item {
+    --inner-border-width: 0px;
+}

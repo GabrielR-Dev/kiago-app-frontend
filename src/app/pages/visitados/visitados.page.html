@@ -11,7 +11,7 @@
 
 <ion-header>
   <ion-toolbar>
-    <ion-title>Mis Comentarios</ion-title>
+    <ion-title class="tituloVariado">Mis Comentarios</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -28,6 +28,7 @@
           </small>
           <p><strong>XID:</strong> {{ comentario.xid }}</p>
         </ion-label>
+        
         <ion-button color="danger" fill="clear" slot="end" (click)="eliminarComentario(comentario.id)">
           <ion-icon name="trash-outline"></ion-icon>
         </ion-button>
