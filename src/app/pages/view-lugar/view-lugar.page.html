@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home/mapa"></ion-back-button>
     </ion-buttons>
@@ -14,8 +14,12 @@
     <ion-img *ngIf="lugar.preview?.source" [src]="lugar.preview.source" alt="{{lugar.name}}"></ion-img>
 
     <ion-card-header>
-      <ion-card-title>{{ lugar.name }}</ion-card-title>
-      <ion-card-subtitle>{{ lugar.kinds }}</ion-card-subtitle>
+      <ion-card-title>
+        <h3>{{ lugar.name }}</h3>
+      </ion-card-title>
+      <ion-card-subtitle>
+        <p><strong>Categorias:</strong> {{ lugar.kinds }} </p>
+      </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       <p><strong>Dirección:</strong>
@@ -29,7 +33,9 @@
         Ir al Lugar
       </ion-button>
 
-      <p *ngIf="lugar.wikipedia_extracts?.text">{{ lugar.wikipedia_extracts.text }}</p>
+      <p *ngIf="lugar.wikipedia_extracts?.text">
+        <strong>Descripción: </strong> {{ lugar.wikipedia_extracts.text }}
+      </p>
 
       <p *ngIf="lugar.rate"><strong>Rating:</strong> {{ lugar.rate }}</p>
 
@@ -76,12 +82,12 @@
     </ion-item>
   </ion-list>
 
-</ion-content >
+</ion-content>
 
-  <!-- Spinner de carga -->
-  <ng-template #cargando>
-    <div class="cargando">
-      <ion-spinner name="crescent"></ion-spinner>
-      <p>Cargando detalles del lugar...</p>
-    </div>
-  </ng-template>
+<!-- Spinner de carga -->
+<ng-template #cargando>
+  <div class="cargando">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando detalles del lugar...</p>
+  </div>
+</ng-template>

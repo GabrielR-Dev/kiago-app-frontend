@@ -32,7 +32,12 @@ ion-tab-button {
     }
 }
 
-
+ion-label,
+ion-select,
+ion-item {
+  --background: #3a7f7a;
+  background-color: #3a7f7a;
+}
 
 
 ion-header {
@@ -42,4 +47,8 @@ ion-header {
 ion-grid {
     text-align: center;
 
+}
+
+.espacio {
+    margin-left: -40px;
 }

@@ -12,12 +12,16 @@ ion-content {
     display: flex;
 }
 
-
-
 .map {
     height: 85%;
     width: 97%;
     margin: 70px auto;
-    border: 1px solid #000;
+    border: 5px solid #3a7f7a;
 }
 
+ion-label,
+ion-select,
+ion-item {
+  --background: #3a7f7a;
+  background-color: #3a7f7a;
+}

@@ -1,27 +1,41 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar>
+    <ion-title class="titleLogo">
+      <div class="divHeader">
+        <img src="assets/img/LogoSinFondo.png" alt="Logo de la app">
+        <span>KIAGO</span>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-header>
+  <ion-toolbar>
     <ion-title>Mis Comentarios</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="comentarios.length > 0; else sinComentarios">
-  <ion-list>
-    <ion-item *ngFor="let comentario of comentarios">
-      <ion-label>
-        <h3>{{ comentario.nombreLugar }}</h3>
-        <p>{{ comentario.comentario }}</p>
-        <small>
-          {{ comentario.fecha?.toDate?.() ? (comentario.fecha.toDate() | date: 'short') : (comentario.fecha | date:
-          'short') }}
-        </small>
-        <p><strong>XID:</strong> {{ comentario.xid }}</p>
-      </ion-label>
-      <ion-button color="danger" fill="clear" slot="end" (click)="eliminarComentario(comentario.id)">
-        <ion-icon name="trash-outline"></ion-icon>
-      </ion-button>
+  <ion-card>
+    <ion-list>
+      <ion-item *ngFor="let comentario of comentarios">
+        <ion-label>
+          <h3>{{ comentario.nombreLugar }}</h3>
+          <p>{{ comentario.comentario }}</p>
+          <small>
+            {{ comentario.fecha?.toDate?.() ? (comentario.fecha.toDate() | date: 'short') : (comentario.fecha | date:
+            'short') }}
+          </small>
+          <p><strong>XID:</strong> {{ comentario.xid }}</p>
+        </ion-label>
+        <ion-button color="danger" fill="clear" slot="end" (click)="eliminarComentario(comentario.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
 
-    </ion-item>
-  </ion-list>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
 
 </ion-content>
 

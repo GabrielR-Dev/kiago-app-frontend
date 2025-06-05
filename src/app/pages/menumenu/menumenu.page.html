@@ -11,6 +11,9 @@
 
 <ion-header>
   <ion-toolbar>
+    <ion-title slot="start" class="espacio">
+      <strong>Lugares de Interes</strong>
+    </ion-title>
     <ion-buttons slot="end">
       <!-- Lista de filtros llama al metodo cargarVista() -->
 
@@ -41,7 +44,7 @@
   <ng-container *ngIf="lugares && lugares.length > 0; else sinResultados">
     <ion-card *ngFor="let lugar of lugares">
       <ion-card-header>
-        <ion-card-title>{{ lugar.name }}</ion-card-title>
+        <ion-card-title><h3>{{ lugar.name }}</h3></ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <p><strong>Distancia:</strong> {{ lugar.dist | number: '1.0-0' }} metros</p>

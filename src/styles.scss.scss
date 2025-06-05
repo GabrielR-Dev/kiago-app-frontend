@@ -7,7 +7,7 @@ img {
 .divHeader {
     display: flex;
     align-items: center;
-    background-color: #3a7f7a;
+    background-color: #61b151;
     font-size: 32px;
     font-weight: bold
 }
@@ -20,6 +20,7 @@ img {
 }
 
 ion-toolbar,
+ion-card,
 ion-card-content,
 ion-card-header,
 ion-list,
@@ -36,4 +37,13 @@ ion-content {
   color: #dddddd;
 }
 
+ion-button {
+  --background: #61b151;
+}
+
+h3 {
+  font-weight: bold;
+  border-bottom: 2px solid;
+  padding-bottom: 15px;
+}
 
